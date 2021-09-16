@@ -17,3 +17,15 @@ and to read properties:
 ```cc
 props["propname"]
 ```
+want to know if a property exists? 
+```cc
+props.propertyExists("propname")
+```
+or how to set a property's content? 
+```cc
+props.setProperty("propname", "value") // this even creates the property if it doesnt exist
+```
+finally, if you want to convert your properties into a string
+```cc
+props.stringify()
+```

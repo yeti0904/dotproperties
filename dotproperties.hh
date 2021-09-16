@@ -76,6 +76,33 @@ class Properties {
 			}
 			read(fstr);
 		}
+		bool propertyExists(string name) {
+			for (size_t i = 0; i<propsBuffer.size(); ++i) {
+				if (propsBuffer[i].name == name)
+					return true;
+			}
+			return false;
+		}
+		void setProperty(string name, string value) {
+			size_t i;
+			if (propertyExists(name)) {
+				for (i = 0; (i<propsBuffer.size()) && (propsBuffer[i].name != name); ++i) {};
+				propsBuffer[i].value = value;
+			}
+			else {
+				propsBuffer.push_back({
+					name,
+					value
+				});
+			}
+		}
+		string stringify() {
+			string ret;
+			for (size_t i = 0; i<propsBuffer.size(); ++i) {
+				ret += propsBuffer[i].name + '=' + propsBuffer[i].value + '\n';
+			}
+			return ret;
+		}
 		string operator[](string name) {
 			bool   found = false;
 			size_t location;

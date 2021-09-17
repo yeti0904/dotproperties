@@ -23,7 +23,7 @@ props.propertyExists("propname")
 ```
 or how to set a property's content? 
 ```cc
-props.setProperty("propname", "value") // this even creates the property if it doesnt exist
+props["propname"] = "value"; // this even creates the property if it doesnt exist
 ```
 finally, if you want to convert your properties into a string
 ```cc

@@ -9,8 +9,15 @@ using std::to_string;
 using std::runtime_error;
 
 class Properties {
+	private:
+		struct propertiesBuffer {
+			string name;
+			string value;
+		};
+		string unparsedBuffer;
 	public:
 		Properties() {};
+		vector <propertiesBuffer> propsBuffer;
 		void read(string buf) {
 			vector <string> lines;
 			string reading;
@@ -68,11 +75,11 @@ class Properties {
 			std::ifstream fhnd(fname);
 			std::string fstr = "";
 			if (fhnd.is_open()) {
-    			std::string fline;
-    			while (getline(fhnd, fline)) {
-       				fstr += fline + "\n";
-    			}
-    			fhnd.close();
+				std::string fline;
+				while (getline(fhnd, fline)) {
+	   				fstr += fline + "\n";
+				}
+				fhnd.close();
 			}
 			read(fstr);
 		}
@@ -83,19 +90,6 @@ class Properties {
 			}
 			return false;
 		}
-		void setProperty(string name, string value) {
-			size_t i;
-			if (propertyExists(name)) {
-				for (i = 0; (i<propsBuffer.size()) && (propsBuffer[i].name != name); ++i) {};
-				propsBuffer[i].value = value;
-			}
-			else {
-				propsBuffer.push_back({
-					name,
-					value
-				});
-			}
-		}
 		string stringify() {
 			string ret;
 			for (size_t i = 0; i<propsBuffer.size(); ++i) {
@@ -103,26 +97,21 @@ class Properties {
 			}
 			return ret;
 		}
-		string operator[](string name) {
+		string& operator[](string name) {
 			bool   found = false;
-			size_t location;
-			for (size_t i = 0; i<propsBuffer.size(); ++i) {
+			size_t i;
+			for (i = 0; i<propsBuffer.size(); ++i) {
 				if (propsBuffer[i].name == name) {
-					found    = true;
-					location = i;
+					found = true;
 					break;
 				}
 			}
 			if (!found)
-				throw runtime_error("No such value in buffer: " +name);
+				propsBuffer.push_back({
+					name,
+					""
+				});
 			// return the contents of the value
-			return propsBuffer[location].value;
+			return propsBuffer[i].value;
 		}
-	private:
-		struct propertiesBuffer {
-			string name;
-			string value;
-		};
-		string unparsedBuffer;
-		vector <propertiesBuffer> propsBuffer;
 };

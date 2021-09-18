@@ -97,6 +97,14 @@ class Properties {
 			}
 			return ret;
 		}
+		void listProps(vector <string> &arr) {
+			for (size_t i = 0; i<propsBuffer.size(); ++i) {
+				arr.push_back(propsBuffer[i].name);
+			}
+		}
+		void clear() {
+			propsBuffer.clear();
+		}
 		string& operator[](string name) {
 			bool   found = false;
 			size_t i;

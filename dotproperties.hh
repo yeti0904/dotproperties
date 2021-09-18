@@ -15,9 +15,9 @@ class Properties {
 			string value;
 		};
 		string unparsedBuffer;
+		vector <propertiesBuffer> propsBuffer;
 	public:
 		Properties() {};
-		vector <propertiesBuffer> propsBuffer;
 		void read(string buf) {
 			vector <string> lines;
 			string reading;

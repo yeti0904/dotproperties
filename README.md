@@ -25,7 +25,16 @@ or how to set a property's content?
 ```cc
 props["propname"] = "value"; // this even creates the property if it doesnt exist
 ```
-finally, if you want to convert your properties into a string
+if you want to convert your properties into a string
 ```cc
 props.stringify()
+```
+to clear the properties buffer: 
+```cc
+props.clear();
+```
+if you want a vector with the names of every property:
+```cc
+std::vector <std::string> propsNames;
+props.listProps(propsNames);
 ```

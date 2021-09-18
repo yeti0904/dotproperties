@@ -3,28 +3,24 @@
 #include <string>
 #include <stdexcept>
 #include <iostream>
-using std::vector;
-using std::string;
-using std::to_string;
-using std::runtime_error;
 
 class Properties {
 	private:
 		struct propertiesBuffer {
-			string name;
-			string value;
+			std::string name;
+			std::string value;
 		};
-		string unparsedBuffer;
-		vector <propertiesBuffer> propsBuffer;
+		std::string unparsedBuffer;
+		std::vector <propertiesBuffer> propsBuffer;
 	public:
 		Properties() {};
-		void read(string buf) {
-			vector <string> lines;
-			string reading;
-			string tmpName;
-			string tmpValue;
-			size_t equLocation;
-			int    equAmount;
+		void read(std::string buf) {
+			std::vector <std::string> lines;
+			std::string reading;
+			std::string tmpName;
+			std::string tmpValue;
+			size_t      equLocation;
+			int         equAmount;
 			for (size_t i = 0; i<buf.length(); ++i) {
 				if (buf[i] == 10) { // the new line character, \n
 					lines.push_back(reading);
@@ -48,10 +44,10 @@ class Properties {
 						}
 					}
 					if (equAmount == 0) {
-						throw runtime_error((string)"Syntax error (line " + to_string(i) +"): value left undefined");
+						throw std::runtime_error((std::string)"Syntax error (line " + std::to_string(i) +"): value left undefined");
 					}
 					else if (equAmount > 1) {
-						throw runtime_error((string)"Syntax error (line" + to_string(i) +"): too many instances of '='");
+						throw std::runtime_error((std::string)"Syntax error (line" + std::to_string(i) +"): too many instances of '='");
 					}
 					// begin lexing
 					tmpName  = "";
@@ -71,7 +67,7 @@ class Properties {
 				}
 			}
 		}
-		void readFromFile(string fname) {
+		void readFromFile(std::string fname) {
 			std::ifstream fhnd(fname);
 			std::string fstr = "";
 			if (fhnd.is_open()) {
@@ -83,21 +79,21 @@ class Properties {
 			}
 			read(fstr);
 		}
-		bool propertyExists(string name) {
+		bool propertyExists(std::string name) {
 			for (size_t i = 0; i<propsBuffer.size(); ++i) {
 				if (propsBuffer[i].name == name)
 					return true;
 			}
 			return false;
 		}
-		string stringify() {
-			string ret;
+		std::string stringify() {
+			std::string ret;
 			for (size_t i = 0; i<propsBuffer.size(); ++i) {
 				ret += propsBuffer[i].name + '=' + propsBuffer[i].value + '\n';
 			}
 			return ret;
 		}
-		void listProps(vector <string> &arr) {
+		void listProps(std::vector <std::string> &arr) {
 			for (size_t i = 0; i<propsBuffer.size(); ++i) {
 				arr.push_back(propsBuffer[i].name);
 			}
@@ -105,7 +101,7 @@ class Properties {
 		void clear() {
 			propsBuffer.clear();
 		}
-		string& operator[](string name) {
+		std::string& operator[](std::string name) {
 			bool   found = false;
 			size_t i;
 			for (i = 0; i<propsBuffer.size(); ++i) {

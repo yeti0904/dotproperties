@@ -33,7 +33,7 @@ class Properties {
 			// now lex
 			propsBuffer = {}; // clear the properties buffer
 			for (size_t i = 0; i<lines.size(); ++i) {
-				if (lines[i][0] != '#') { // ignore comments
+				if ((lines[i][0] != '#') && (lines[i].length() > 0)) { // ignore comments
 					equAmount = 0;
 					for (size_t i2 = 0; i2<lines[i].length(); ++i2) {
 						if (lines[i][i2] == '=') {
